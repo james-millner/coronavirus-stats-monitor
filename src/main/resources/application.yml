@@ -1,0 +1,31 @@
+spring:
+  jmx:
+    enabled: true
+  main:
+    banner-mode: "off"
+  application:
+    name: "stats-monitor"
+
+logging:
+  level:
+    ROOT: INFO
+
+server:
+  port: 8080
+
+# Monitoring
+management:
+  server:
+    port: 8081
+    ssl:
+      enabled: false
+  endpoints:
+    enabled-by-default: false
+    web:
+      exposure:
+        include: "health,prometheus"
+  endpoint:
+    prometheus:
+      enabled: true
+    health:
+      enabled: true
