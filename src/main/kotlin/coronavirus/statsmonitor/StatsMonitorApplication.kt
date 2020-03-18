@@ -23,7 +23,7 @@ private val logger = KotlinLogging.logger{ }
 @Service
 class Runner(val service: WebService, val meterRegistry: PrometheusMeterRegistry, val statRepository: StatRepository) {
 
-    @Scheduled(cron = "0 12 0 * * ?", zone = "Europe/London")
+    @Scheduled(cron = "0 30 0 * * ?", zone = "Europe/London")
     fun run() {
         val stats = service.getData()
 
