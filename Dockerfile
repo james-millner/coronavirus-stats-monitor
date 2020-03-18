@@ -1,5 +1,4 @@
-FROM adoptopenjdk/openjdk11-openj9:jdk-11.0.1.13-alpine-slim
-RUN apk add --no-cache bash
+FROM armv7/armhf-java8
 
 RUN mkdir -p /app
 WORKDIR /app
