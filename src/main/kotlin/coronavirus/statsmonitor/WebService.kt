@@ -1,12 +1,21 @@
 package coronavirus.statsmonitor
 
 import org.jsoup.Jsoup
+import org.springframework.data.annotation.Id
+import org.springframework.data.mongodb.core.mapping.Document
+import org.springframework.data.mongodb.repository.MongoRepository
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Controller
 import org.springframework.stereotype.Service
 import org.springframework.web.bind.annotation.GetMapping
+import java.time.Instant
+import java.util.UUID
 
+
+@Document
 data class Stat(
+        @Id
+        val id: String = UUID.randomUUID().toString(),
         val country: String,
         val totalCases: Long?,
         val newCases: Long?,
@@ -15,8 +24,11 @@ data class Stat(
         val totalRecovered: Long?,
         val activeCases: Long?,
         val seriousCriticalCases: Long?,
-        val totalCasesPer1MPopulation: Double?
+        val totalCasesPer1MPopulation: Double?,
+        val timestamp: Instant = Instant.now()
 )
+
+interface StatRepository: MongoRepository<Stat, Long>
 
 @Service
 class WebService() {
@@ -27,10 +39,6 @@ class WebService() {
                         .select("tbody > tr")
 
                 tableRows.map {
-                    println("TableRow")
-                    println(it.toString())
-
-                    println("*** Each Row ***")
                     val td = it.select("td")
 
                     val stat = Stat(
@@ -51,7 +59,7 @@ class WebService() {
 
 
 @Controller
-class test(val service: WebService) {
+class test(val service: WebService, val repository: StatRepository) {
 
     @GetMapping("/test")
     fun get() = ResponseEntity.ok(service.getData())

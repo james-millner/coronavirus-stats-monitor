@@ -1,0 +1,46 @@
+version: '3'
+services:
+
+#  mongodb:
+#    image: mongo:latest
+#    environment:
+#      - MONGO_DATA_DIR=/data/db
+#      - MONGO_LOG_DIR=/dev/null
+#      - MONGODB_USER="root"
+#      - MONGODB_PASS="root"
+#    ports:
+#      - 27017:27017
+#    command: mongod --logpath=/dev/null # --quiet
+
+  mongodb:
+    image: mangoraft/mongodb-arm
+    environment:
+      - AUTH=no
+    ports:
+      - 27017:27017
+
+  stats:
+    build: .
+    ports:
+      - "8080:8080"
+      - "8081:8081"
+
+#  prometheus:
+#    image: prom/prometheus
+#    restart: always
+#    ports:
+#      - "9090:9090"
+#    volumes:
+#      - "./prometheus/prometheus-config.yaml:/etc/prometheus/prometheus.yml"
+#
+#  grafana:
+#    image: grafana/grafana
+#    depends_on:
+#      - "prometheus"
+#    ports:
+#      - "3000:3000"
+#    volumes:
+#      - "./grafana/provisioning/:/etc/grafana/provisioning/"
+#    env_file:
+#      - ./grafana/config.monitoring
+#    restart: always

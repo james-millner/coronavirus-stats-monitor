@@ -21,9 +21,9 @@ fun main(args: Array<String>) {
 private val logger = KotlinLogging.logger{ }
 
 @Service
-class Runner(val service: WebService, val meterRegistry: PrometheusMeterRegistry) {
+class Runner(val service: WebService, val meterRegistry: PrometheusMeterRegistry, val statRepository: StatRepository) {
 
-    @Scheduled(cron = "0 08 23 * * ?", zone = "Europe/London")
+    @Scheduled(cron = "0 12 0 * * ?", zone = "Europe/London")
     fun run() {
         val stats = service.getData()
 
@@ -36,8 +36,12 @@ class Runner(val service: WebService, val meterRegistry: PrometheusMeterRegistry
             meterRegistry.gauge("total.recovered.cases", tags , it.totalRecovered ?: 0)
             meterRegistry.gauge("serious.critical.cases", tags , it.seriousCriticalCases ?: 0)
             meterRegistry.gauge("total.cases.per.one.million.population", tags , it.totalCasesPer1MPopulation ?: 0.0)
+
+            statRepository.save(it)
         }
 
         logger.info { "Published ${stats.size} statistics" }
+
+        logger.info { "Total stat records in mongodb ${statRepository.count()}" }
     }
 }

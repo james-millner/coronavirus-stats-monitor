@@ -1,4 +1,9 @@
 spring:
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      database: mongodb
   jmx:
     enabled: true
   main:

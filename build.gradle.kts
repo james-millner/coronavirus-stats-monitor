@@ -18,6 +18,7 @@ repositories {
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-actuator")
     implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("org.springframework.boot:spring-boot-starter-data-mongodb")
     implementation("io.micrometer:micrometer-registry-prometheus")
     implementation("org.jsoup:jsoup:1.10.3")
     implementation("io.github.microutils:kotlin-logging:1.6.24")
