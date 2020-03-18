@@ -15,7 +15,7 @@ services:
   mongodb:
     image: mangoraft/mongodb-arm
     environment:
-      AUTH: no
+      AUTH: "no"
     ports:
       - 27017:27017
 
