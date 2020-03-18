@@ -1,29 +1,25 @@
 version: '3'
 services:
 
-#  mongodb:
-#    image: mongo:latest
-#    environment:
-#      - MONGO_DATA_DIR=/data/db
-#      - MONGO_LOG_DIR=/dev/null
-#      - MONGODB_USER="root"
-#      - MONGODB_PASS="root"
-#    ports:
-#      - 27017:27017
-#    command: mongod --logpath=/dev/null # --quiet
-
   mongodb:
-    image: mangoraft/mongodb-arm
+    image: mongo:latest
     environment:
-      AUTH: "no"
+      - MONGO_DATA_DIR=/data/db
+      - MONGO_LOG_DIR=/dev/null
+      - MONGODB_USER="root"
+      - MONGODB_PASS="root"
     ports:
       - 27017:27017
+    command: mongod --logpath=/dev/null # --quiet
 
-  stats:
-    build: .
-    ports:
-      - "8080:8080"
-      - "8081:8081"
+#  mongodb:
+#    image: mangoraft/mongodb-arm
+#    environment:
+#      AUTH: "no"
+#    ports:
+#      - 27017:27017
+
+#017
 
 #  prometheus:
 #    image: prom/prometheus

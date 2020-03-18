@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.GetMapping
 import java.time.Instant
 import java.util.UUID
 
-
 @Document
 data class Stat(
         @Id
@@ -31,11 +30,11 @@ data class Stat(
 interface StatRepository: MongoRepository<Stat, Long>
 
 @Service
-class WebService() {
+class WebService {
 
     fun getData(): List<Stat> =
             Jsoup.connect("https://www.worldometers.info/coronavirus/").get().run {
-                val tableRows = getElementById("main_table_countries")
+                val tableRows = getElementById("main_table_countries_today")
                         .select("tbody > tr")
 
                 tableRows.map {
@@ -55,12 +54,4 @@ class WebService() {
                     stat
                 }
             }
-}
-
-
-@Controller
-class test(val service: WebService, val repository: StatRepository) {
-
-    @GetMapping("/test")
-    fun get() = ResponseEntity.ok(service.getData())
 }
