@@ -17,7 +17,7 @@ services:
     environment:
       AUTH: "no"
     volumes:
-      - db-data:/data/db
+      - "./data/db:/data/db"
     ports:
       - 27017:27017
 
