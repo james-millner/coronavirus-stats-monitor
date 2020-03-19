@@ -16,6 +16,8 @@ services:
     image: jmillnerdev/mongodb-rpi
     environment:
       AUTH: "no"
+    volumes:
+      - db-data:/data/db
     ports:
       - 27017:27017
 
