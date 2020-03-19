@@ -11,6 +11,6 @@ scrape_configs:
     metrics_path: '/actuator/prometheus'
 
     static_configs:
-      - targets: ['stats-monitor:8080']
+      - targets: ['stats-monitor:8081']
         labels:
           application: 'stats-monitor-monitoring'

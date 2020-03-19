@@ -26,5 +26,26 @@ services:
     restart: always
     ports:
       - "8080:8080"
+      - "8081:8081"
     depends_on:
       - "mongodb"
+
+  prometheus:
+    image: prom/prometheus-linux-armv7
+    restart: always
+    ports:
+      - "9090:9090"
+    volumes:
+      - "./prometheus/prometheus-config.yaml:/etc/prometheus/prometheus.yml"
+
+  grafana:
+    image: grafana/grafana:master
+    depends_on:
+      - "prometheus"
+    ports:
+      - "3000:3000"
+    volumes:
+      - "./grafana/provisioning/:/etc/grafana/provisioning/"
+    env_file:
+      - ./grafana/config.monitoring
+    restart: always
