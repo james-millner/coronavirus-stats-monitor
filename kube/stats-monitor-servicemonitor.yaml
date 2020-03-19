@@ -1,0 +1,17 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  labels:
+    k8s-app: stats-monitor
+  name: stats-monitor
+  namespace: default
+spec:
+  jobLabel: stats-monitor-monitoring
+  selector:
+    matchLabels:
+      io.kompose.service: stats-monitor
+  endpoints:
+    - interval: 30s
+      port: metrics
+      path: /actuator/prometheus
+      scheme: http

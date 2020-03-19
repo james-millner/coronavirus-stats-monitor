@@ -33,7 +33,8 @@ class ScheduledRunner(val service: WebService, val meterRegistry: PrometheusMete
 
         stats.forEach {
             val tags = listOf(Tag.of("country", it.country))
-            meterRegistry.gauge("total.cases", tags, it.activeCases ?: 0)
+            meterRegistry.gauge("total.cases", tags, it.totalCases ?: 0)
+            meterRegistry.gauge("active.cases", tags, it.activeCases ?: 0)
             meterRegistry.gauge("new.cases", tags, it.newCases ?: 0)
             meterRegistry.gauge("total.deaths", tags, it.totalDeaths ?: 0)
             meterRegistry.gauge("new.deaths", tags, it.newDeaths ?: 0)
