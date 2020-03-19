@@ -1,23 +1,23 @@
 version: '3'
 services:
 
-  mongodb:
-    image: mongo:latest
-    environment:
-     - MONGO_DATA_DIR=/data/db
-     - MONGO_LOG_DIR=/dev/null
-     - MONGODB_USER="root"
-     - MONGODB_PASS="root"
-    ports:
-      - 27017:27017
-    command: mongod --logpath=/dev/null # --quiet
-
   # mongodb:
-  #   image: jmillnerdev/mongodb-rpi
+  #   image: mongo:latest
   #   environment:
-  #     AUTH: "no"
+  #    - MONGO_DATA_DIR=/data/db
+  #    - MONGO_LOG_DIR=/dev/null
+  #    - MONGODB_USER="root"
+  #    - MONGODB_PASS="root"
   #   ports:
   #     - 27017:27017
+  #   command: mongod --logpath=/dev/null # --quiet
+
+  mongodb:
+    image: jmillnerdev/mongodb-rpi
+    environment:
+      AUTH: "no"
+    ports:
+      - 27017:27017
 
   stats-monitor:
     image: jmillnerdev/stats-monitor:latest
