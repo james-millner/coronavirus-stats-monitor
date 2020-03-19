@@ -3,9 +3,7 @@ spring:
     mongodb:
       host: mongodb
       port: 27017
-      database: admin
-      username: admin
-      password: admin
+      database: stats
   jmx:
     enabled: true
   main:
