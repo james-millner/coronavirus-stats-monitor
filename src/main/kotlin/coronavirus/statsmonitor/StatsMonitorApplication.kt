@@ -46,7 +46,7 @@ class ScheduledRunner(val service: WebService, val meterRegistry: PrometheusMete
 
         logger.info { "Published ${stats.size} statistics" }
 
-        logger.info { "Total stat records in mongodb ${statRepository.count()}" }
+        logger.info { "Total stat records in db ${statRepository.count()}" }
 
         return stats
     }
