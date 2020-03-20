@@ -11,6 +11,9 @@ import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Controller
 import org.springframework.stereotype.Service
 import org.springframework.web.bind.annotation.GetMapping
+import java.util.concurrent.atomic.AtomicLong
+import java.util.concurrent.atomic.AtomicReference
+
 
 @SpringBootApplication
 @EnableScheduling
@@ -29,18 +32,17 @@ class ScheduledRunner(val service: WebService, val meterRegistry: PrometheusMete
     fun run() = getLatestStatistics()
 
     fun getLatestStatistics(): List<Stat> {
-        val stats = service.getData()
+        val stats = service.getData().toMutableList()
 
         stats.forEach {
             val tags = listOf(Tag.of("country", it.country))
-            meterRegistry.gauge("total.cases", tags, it.totalCases ?: 0)
-            meterRegistry.gauge("active.cases", tags, it.activeCases ?: 0)
-            meterRegistry.gauge("new.cases", tags, it.newCases ?: 0)
-            meterRegistry.gauge("total.deaths", tags, it.totalDeaths ?: 0)
-            meterRegistry.gauge("new.deaths", tags, it.newDeaths ?: 0)
-            meterRegistry.gauge("total.recovered.cases", tags, it.totalRecovered ?: 0)
-            meterRegistry.gauge("serious.critical.cases", tags, it.seriousCriticalCases ?: 0)
-            meterRegistry.gauge("total.cases.per.one.million.population", tags, it.totalCasesPer1MPopulation ?: 0.0)
+            meterRegistry.gauge("total.cases", tags, AtomicLong(it.totalCases ?: 0))
+            meterRegistry.gauge("active.cases", tags,  AtomicLong(it.activeCases ?: 0))
+            meterRegistry.gauge("new.cases", tags,  AtomicLong(it.newCases ?: 0))
+            meterRegistry.gauge("total.deaths", tags,  AtomicLong(it.totalDeaths ?: 0))
+            meterRegistry.gauge("new.deaths", tags,  AtomicLong(it.newDeaths ?: 0))
+            meterRegistry.gauge("total.recovered.cases", tags,  AtomicLong(it.totalRecovered ?: 0))
+            meterRegistry.gauge("serious.critical.cases", tags,  AtomicLong(it.seriousCriticalCases ?: 0))
 
             statRepository.save(it)
         }
