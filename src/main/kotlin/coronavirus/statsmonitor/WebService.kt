@@ -2,6 +2,7 @@ package coronavirus.statsmonitor
 
 import org.jsoup.Jsoup
 import org.springframework.data.jpa.repository.JpaRepository
+import org.springframework.data.jpa.repository.Query
 import org.springframework.stereotype.Service
 import java.time.Instant
 import javax.persistence.Column
@@ -37,7 +38,13 @@ data class Stat(
         val timestamp: Instant = Instant.now()
 )
 
-interface StatRepository : JpaRepository<Stat, Long>
+interface StatRepository : JpaRepository<Stat, Long> {
+
+    fun findByTimestamp(timestamp: Instant): List<Stat>
+
+    @Query("SELECT max(s.timestamp) from Stat s")
+    fun findMaxTimestamp(): Instant
+}
 
 @Service
 class WebService {
@@ -52,6 +59,8 @@ class WebService {
                         val tableRows = getElementById("main_table_countries_today")
                                 .select("tbody > tr")
 
+                        val now = Instant.now()
+
                         tableRows.map {
                             val td = it.select("td")
 
@@ -64,7 +73,8 @@ class WebService {
                                     totalRecovered = td[5].text().trim().replace(",", "").toLongOrNull(),
                                     activeCases = td[6].text().trim().replace(",", "").toLongOrNull(),
                                     seriousCriticalCases = td[7].text().trim().replace(",", "").toLongOrNull(),
-                                    totalCasesPer1MPopulation = td[8].text().trim().toDoubleOrNull()
+                                    totalCasesPer1MPopulation = td[8].text().trim().toDoubleOrNull(),
+                                    timestamp = now
                             )
                             stat
                         }

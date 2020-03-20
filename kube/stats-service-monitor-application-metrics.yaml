@@ -1,0 +1,17 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  labels:
+    k8s-app: stats-monitor-application-monitoring
+  name: stats-monitor-application-monitoring
+  namespace: default
+spec:
+  jobLabel: stats-monitor-application-monitoring-monitoring
+  selector:
+    matchLabels:
+      io.kompose.service: stats-monitor
+  endpoints:
+    - interval: 3600s
+      port: metrics
+      path: /metrics
+      scheme: http
