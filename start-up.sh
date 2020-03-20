@@ -12,7 +12,7 @@ fi
 
 # turn off DNS caching for apps that need it turned off
 if [[ -n "$DISABLE_DNS_CACHE" && "$DISABLE_DNS_CACHE" == "true" ]]; then
-    JAVA_ARGS="$JAVA_ARGS -Dnetworkaddress.cache.ttl=0 -Dnetworkaddress.cache.negative.ttl=0"
+    JAVA_ARGS="$JAVA_ARGS -Dnetworkaddress.cache.ttl=0 -Dnetworkaddress.cache.negative.ttl=0 -XX:InitialRAMPercentage=70 -XX:MaxRAMPercentage=90"
 fi
 
 

@@ -28,7 +28,13 @@ spec:
             containerPort: 8080
           - name: metrics
             containerPort: 8081
-        resources: {}
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "100m"
+          limits:
+            memory: "256Mi"
+            cpu: "250m"
         readinessProbe:
           httpGet:
             scheme: HTTP
@@ -42,7 +48,7 @@ spec:
             path: /actuator/health
             port: metrics
           initialDelaySeconds: 10
-          periodSeconds: 30
+          periodSeconds: 60
       restartPolicy: Always
 
 status: {}

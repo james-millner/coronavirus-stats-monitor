@@ -12,6 +12,6 @@ spec:
       io.kompose.service: stats-monitor
   endpoints:
     - interval: 3600s
-      port: metrics
+      port: api
       path: /metrics
       scheme: http
