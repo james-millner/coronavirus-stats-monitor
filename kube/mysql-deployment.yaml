@@ -1,19 +1,46 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: mariadb-pv-volume
+  labels:
+    type: local
+spec:
+  storageClassName: local-path
+  capacity:
+    storage: 10Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/mnt/data"
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mariadb-pv-claim
+spec:
+  storageClassName: local-path
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 2Gi
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    io.kompose.service: mysql
-  name: mysql
+    io.kompose.service: mariadb
+  name: mariadb
 spec:
   replicas: 1
   selector:
     matchLabels:
-      io.kompose.service: mysql
+      io.kompose.service: mariadb
   strategy: {}
   template:
     metadata:
       labels:
-        io.kompose.service: mysql
+        io.kompose.service: mariadb
     spec:
       containers:
       - env:
@@ -23,10 +50,13 @@ spec:
           value: "root"
         image: yobasystems/alpine-mariadb
         imagePullPolicy: "IfNotPresent"
-        name: mysql
+        name: mariadb
         ports:
         - containerPort: 3306
         resources: {}
       restartPolicy: Always
-      volumes: null
+      volumes:
+        - name: mariadb-persistent-storage
+          persistentVolumeClaim:
+            claimName: mariadb-pv-claim
 status: {}

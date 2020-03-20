@@ -1,17 +1,8 @@
 version: '3'
 services:
 
-#  stats-monitor:
-#    image: jmillnerdev/stats-monitor:latest
-#    restart: always
-#    ports:
-#      - "8080:8080"
-#      - "8081:8081"
-#    depends_on:
-#      - "mongodb"
-
-  mysql:
-    image: yobasystems/alpine-mariadb
+  mariadb:
+    image: mariadb
     restart: always
     environment:
       MYSQL_DATABASE: stats
