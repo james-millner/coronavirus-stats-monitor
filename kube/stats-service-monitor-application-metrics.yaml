@@ -11,7 +11,7 @@ spec:
     matchLabels:
       io.kompose.service: stats-monitor
   endpoints:
-    - interval: 3600s
+    - interval: 60s
       port: api
       path: /metrics
       scheme: http

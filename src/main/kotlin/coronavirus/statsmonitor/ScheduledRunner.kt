@@ -1,6 +1,5 @@
 package coronavirus.statsmonitor
 
-import io.micrometer.prometheus.PrometheusMeterRegistry
 import mu.KotlinLogging
 import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Service
@@ -8,9 +7,9 @@ import org.springframework.stereotype.Service
 private val logger = KotlinLogging.logger{ }
 
 @Service
-class ScheduledRunner(val service: WebService, val meterRegistry: PrometheusMeterRegistry, val statRepository: StatRepository) {
+class ScheduledRunner(val service: WebService, val statRepository: StatRepository) {
 
-    @Scheduled(cron = "0 30 0 * * ?", zone = "Europe/London")
+    @Scheduled(cron = "0 0 1-23 ? * *", zone = "Europe/London")
     fun run() = getLatestStatistics()
 
     fun getLatestStatistics(): List<Stat> {
