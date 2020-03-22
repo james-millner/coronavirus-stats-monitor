@@ -9,7 +9,7 @@ private val logger = KotlinLogging.logger{ }
 @Service
 class ScheduledRunner(val service: WebService, val statRepository: StatRepository) {
 
-    @Scheduled(cron = "5 0 * ? * *", zone = "Europe/London")
+    @Scheduled(cron = "0 0/10 0/1 ? * *", zone = "Europe/London")
     fun run() = getLatestStatistics()
 
     fun getLatestStatistics(): List<Stat> {

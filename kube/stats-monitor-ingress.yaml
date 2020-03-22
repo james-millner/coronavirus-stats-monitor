@@ -1,0 +1,14 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: stats-monitor-ingress
+  annotations:
+    kubernetes.io/ingress.class: "traefik"
+spec:
+  rules:
+    - http:
+        paths:
+          - path: /
+            backend:
+              serviceName: stats-monitor
+              servicePort: 8080
