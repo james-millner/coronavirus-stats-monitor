@@ -50,7 +50,7 @@ interface StatRepository : JpaRepository<Stat, Long> {
 class WebService {
 
     fun getData(): List<Stat> =
-            Jsoup.connect("https://www.worldometers.info/coronavirus/")
+            Jsoup.connect("http://www.worldometers.info/coronavirus/")
                     .header("User-Agent",
                             "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:74.0) Gecko/20100101 Firefox/74.0")
                     .header("Host", "www.worldometers.info")
